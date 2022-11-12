@@ -1,0 +1,45 @@
+
+@import 'base';
+@import 'layout/bars';
+@import 'layout/header';
+@import 'layout/bars';
+@import 'layout/landing';
+@import 'layout/work';
+
+
+
+:root{
+    --pal-0: #4436d4;
+    --pal-1: #b7bdef;
+    --pal-2: #f7c1b4;
+    --pal-3: #f65156;
+    --pal-4: #d3b6e0;
+    --pal-5: #915656;
+    --pal-6: #ffffff;
+    --pal-7: #18884b;
+  }
+
+
+body {
+    margin: 0;
+    padding: 0;
+    color: $text-color;
+    font-family: "violet-sans", monospace;
+    user-select: none;
+    font-style: normal;
+    background-color: $main-color;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    @include for-size(phone-only) {
+    }
+    a {
+        color: $text-color;
+        text-decoration: none;
+    }
+
+    h1,h2,h3,p {
+        margin: 0;
+    }
+
+}

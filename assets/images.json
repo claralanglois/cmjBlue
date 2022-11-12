@@ -1,0 +1,30 @@
+[
+    {
+        "ID": "001",
+        "Name": "ink", 
+        "Image": "angularjs.png" 
+    },
+ 
+    {
+        "ID": "002",
+        "Name": "color", 
+        "Image": "json.png" 
+    },
+  
+    {
+        "ID": "003",
+        "Name": "inktober", 
+        "Image": "aspnet.png" 
+    }
+]
+
+
+array image []
+
+json file with 
+-name
+-img location
+-tag
+
+when button press all images that have a tag associated with it are push in the array 
+take all things in array to put in inner html

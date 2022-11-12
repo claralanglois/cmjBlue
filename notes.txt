@@ -1,0 +1,4 @@
+Creer toutes les entrees avec etsy id mockup, description et main images
+
+Css menu degeu et grille 
+Finir 8page accueil et selected

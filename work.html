@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMJ.blue illustration</title>
+    <link rel="icon" type="image/x-icon" href="/assets/images/icon/p2.svg">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<div class="work">
+    <header>
+
+        <div class="titles">
+            <h1 id="header-title">
+                <a href="index.html">CMJ.blue</a>
+            </h1>
+            <h2>illustratrice | designer textile</h2>
+        </div>
+
+        <div class="nav-container">
+            <nav id="menu">
+                <a id="illustration" onclick="changeTag('illustration')">illustration</a>
+                <a id="textile" onclick="changeTag('textile')">textile</a>
+                <a id="decoration" onclick="changeTag('decoration')">decoration</a>
+                <a href="work.html">contact</a>
+            </nav>
+            <h2 class="shuffle" onclick="shuffle()">Mélanger</h2>
+            <nav class="tags">
+            </nav>
+        </div>
+
+    </header>
+
+    <div id="side-bars">
+        <div class="left-bar">
+            <div class="container-text">
+                <a target="_blank" href="https://www.instagram.com/cmj.blue/"><img
+                        src="assets/images/icon/insta.svg"></a>
+                <p>
+                    cmj.blue
+                </p>
+                <img onclick="topFunction()" class="arrow" src="/assets/images/icon/arrow.svg">
+            </div>
+
+        </div>
+        <div class="up-bar">
+            <div class="marquee">
+                <div class="inner">
+                    <p>illustration | cmj.blue</p><img class="nuageColor" src="assets/images/icon/p7.svg">
+                    <p>illustration | cmj.blue</p><img class="nuageColor" src="assets/images/icon/p7.svg">
+                    <p>illustration | cmj.blue</p><img class="nuageColor" src="assets/images/icon/p7.svg">
+                    <p>illustration | cmj.blue</p><img class="nuageColor" src="assets/images/icon/p7.svg">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="selected">
+        <div class="container">
+            <div class="main"></div>
+            <div>
+                <div class="details"></div>
+                <div class="shop-btn">Order on Etsy</div>
+            </div>
+        </div>
+        <div class="mock">
+        </div>
+    </section>
+    <section class="grid">
+        <div class="masonry"></div>
+    </section>
+</div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/contentful@5.0.1/dist/contentful.browser.min.js"></script>
+<script src="js/contentfull.js"></script>
+<script src="js/script.js"></script>
+
+
+</html>

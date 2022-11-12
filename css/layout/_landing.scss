@@ -1,0 +1,147 @@
+.hero {
+
+  p {
+    position: fixed;
+    top: 50vh;
+    right: 6vw;
+    width: 57vw;
+    text-align: right;
+
+    @include for-size(tablet-landscape-up) {
+      left: 400px;
+      width: 400px;
+      top: 400px;
+    }
+  }
+  .link {
+    transition-delay: 1.7s;
+    display: block;
+    position: relative;
+    text-decoration: none;
+    transform-origin: center;
+    width: 155px;
+    height: 155px;
+    z-index: 10;
+
+    .container-link-circle {
+      width: 100%;
+      height: 100%;
+      display: block;
+      animation-name: loop;
+      animation-duration: 4s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+      animation-play-state: paused;
+
+      .circle-anim {
+        display: block;
+        width: 100%;
+        height: 100%;
+        transition: all 1000ms cubic-bezier(.245, 0, 0, 1);
+
+        .link-circle {
+          width: 100%;
+          height: 100%;
+          -webkit-animation-name: loop;
+          animation-name: loop;
+          -webkit-animation-duration: 10s;
+          animation-duration: 10s;
+          -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+          -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+        }
+      }
+    }
+  }
+  .grid-container {
+    height: 100vh;
+    position: fixed;
+    .coloriage {
+      max-width: 270px;
+      min-width: 180px;
+      width: 15vw;
+      -webkit-user-select: none;
+      /* Chrome all / Safari all */
+      -moz-user-select: none;
+      /* Firefox all */
+      -ms-user-select: none;
+      /* IE 10+ */
+      user-select: none;
+      position: absolute;
+
+      &:nth-child(1) {
+        position: fixed;
+        left: 173px;
+        bottom: 15vh;
+
+        @include for-size(tablet-landscape-up) {
+          left: 385px;
+          bottom: 9vh;
+        }
+
+      }
+
+      &:nth-child(2) {
+        left: 761px;
+        top: 359px;
+      }
+
+      &:nth-child(3) {
+        position: fixed;
+        left: 6px;
+        bottom: 12vh;
+
+        @include for-size(tablet-landscape-up) {
+          left: 160px;
+          bottom: 7vh;
+        }
+      }
+
+      &:nth-child(4) {
+        left: 617px;
+        top: 17px;
+      }
+
+      &:nth-child(5) {
+        left: 588px;
+        top: 490px;
+      }
+
+      &:nth-child(6) {
+        left: 1017px;
+        top: 352px;
+      }
+
+      &:nth-child(7) {
+        left: 1240px;
+        top: 357px;
+      }
+
+      &:nth-child(8) {
+        left: 880px;
+        top: 90px;
+      }
+
+      &:nth-child(9) {
+        position: fixed;
+        right: 5vw;
+        top: 12vw;
+        display: none;
+
+        @include for-size(tablet-portrait-up) {
+          display: unset;
+          top: 9vw;
+        }
+      }
+
+      &:nth-child(10) {
+        left: 1191px;
+        top: 90px;
+      }
+
+
+    }
+
+  }
+}
