@@ -1,6 +1,6 @@
-import {DrawSVGPlugin} from "../node_modules/gsap/DrawSVGPlugin.js"
-import {ScrollTrigger} from "../node_modules/gsap/ScrollTrigger.js"
-import {Flip} from "../node_modules/gsap/Flip.js"
+import {DrawSVGPlugin} from "/node_modules/gsap/DrawSVGPlugin.js"
+import {ScrollTrigger} from "/node_modules/gsap/ScrollTrigger.js"
+import {Flip} from "/node_modules/gsap/Flip.js"
 
 gsap.registerPlugin(DrawSVGPlugin);
 gsap.registerPlugin(ScrollTrigger)
