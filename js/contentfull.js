@@ -1,3 +1,10 @@
+// import {DrawSVGPlugin} from "../node_modules/gsap/DrawSVGPlugin.js"
+// import {ScrollTrigger} from "../node_modules/gsap/ScrollTrigger.js"
+//
+// gsap.registerPlugin(DrawSVGPlugin);
+// gsap.registerPlugin(ScrollTrigger)
+//
+
 const spaceId = "0mhqf7pgbfso"
 const environmentId = "master"
 const accessToken = "w77z_ekcGz3LhjplKHNEz2qxTuRGXjtNzTo8MPlWEmU"
@@ -111,8 +118,60 @@ function DisplaySelectedItem() {
                 sectionGrid.innerHTML = sectionGrid.innerHTML + `
                <div class="mItem"><img class="img" onclick="itemClicked('${entryId}')" src="${imageURL}"></div>`
             });
+            animateGrid()
         })
 }
+
+//todo go through the list of images and remove the one that dont match the tag
+// function tagChanged() {
+//     client.getEntries(
+//         {
+//             order: 'sys.createdAt',
+//             'metadata.tags.sys.id[all]': tags.join()
+//         }
+//     )
+//         .then(function (entries) {
+//             entries.items.map(function (entry) {
+//
+//                 const sectionGrid = document.querySelector(".masonry")
+//
+//                 //load the images with the necessary informations to load the associated details in product page(id, url main image, url mockup)
+//                 var imageURL = 'https:' + entry.fields.mainImage.fields.file.url;
+//                 var entryId = entry.sys.id
+//                 sectionGrid.innerHTML = sectionGrid.innerHTML + `
+//                <div class="mItem"><img class="img" onclick="itemClicked('${entryId}')" src="${imageURL}"></div>`
+//             });
+//
+//         })
+// }
+
+
+function animateGrid() {
+    gsap.defaults({ease: "power4"});
+    gsap.set(".mItem", {y: 50, x: 50});
+
+    ScrollTrigger.batch(".mItem", {
+        interval: 0.1,
+        batchMax: 3,
+        onEnter: batch => gsap.to(batch, {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            stagger: {each: 0.10, grid: [1, 3]},
+            overwrite: true
+        }),
+        onLeave: batch => gsap.set(batch, {opacity: 0, x: -100, y: -50, overwrite: true}),
+        onEnterBack: batch => gsap.to(batch, {opacity: 1, x: 0, y: 0, stagger: 0.10, overwrite: true}),
+        onLeaveBack: batch => gsap.set(batch, {opacity: 0, x: 50, y: 50, overwrite: true})
+    });
+
+}
+
+ScrollTrigger.addEventListener("refreshInit", () => {
+        gsap.set(".mItem", {y: 0, x: 0})
+    }
+);
+
 
 DisplaySelectedItem()
 
@@ -198,4 +257,3 @@ function checkListingsState(id) {
 }
 
 //
-// todo create an entry "selected item" with main img /  mockup imgs / etsy ID / description / name

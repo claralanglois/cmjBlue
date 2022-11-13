@@ -149,6 +149,10 @@ header {
       background-color: $main-color;
       cursor: pointer;
 
+      @include for-size(tablet-landscape-down) {
+        display: none !important;
+      }
+
       &:after {
         content: '';
         border: 1px solid $text-color;
@@ -156,10 +160,6 @@ header {
         left: 0;
         width: 100%;
         z-index: -1;
-      }
-
-      @include for-size(tablet-landscape-down) {
-        display: none;
       }
     }
 
