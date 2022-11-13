@@ -209,9 +209,7 @@
         @include for-size(tablet-landscape-up) {
           max-width: 350px;
         }
-        @include for-size(tablet-landscape-down) {
-          margin-bottom: 100px;
-        }
+
       }
 
       .shop-btn {
@@ -219,6 +217,9 @@
         padding: 5px;
         border: 2px solid $text-color;
         display: inline-flex;
+        @include for-size(tablet-landscape-down) {
+          margin-bottom: 100px;
+        }
       }
     }
   }

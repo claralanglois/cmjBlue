@@ -894,16 +894,16 @@ header .nav-container .shuffle:after {
     max-width: 350px;
   }
 }
-@media (max-width: 900px) {
-  .work .selected .container .details > * {
-    margin-bottom: 100px;
-  }
-}
 .work .selected .container .shop-btn {
   border-radius: 20px;
   padding: 5px;
   border: 2px solid #4b6eeb;
   display: inline-flex;
+}
+@media (max-width: 900px) {
+  .work .selected .container .shop-btn {
+    margin-bottom: 100px;
+  }
 }
 
 .mItem {
