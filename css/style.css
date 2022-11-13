@@ -546,7 +546,7 @@ header .nav-container .shuffle:after {
 
 .hero p {
   position: fixed;
-  top: 50vh;
+  top: 30vh;
   right: 6vw;
   width: 57vw;
   text-align: right;
