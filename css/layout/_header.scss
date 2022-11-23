@@ -142,13 +142,12 @@ header {
     }
 
     .shuffle {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      background-color: $main-color;
       cursor: pointer;
-
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
       @include for-size(tablet-landscape-down) {
         display: none !important;
       }
@@ -157,9 +156,19 @@ header {
         content: '';
         border: 1px solid $text-color;
         position: absolute;
-        left: 0;
-        width: 100%;
+        left: 110%;
+        width: 50%;
         z-index: -1;
+        top: 50%;
+      }
+      &:before {
+        content: '';
+        border: 1px solid $text-color;
+        position: absolute;
+        left: -60%;
+        width: 50%;
+        z-index: -1;
+        top: 50%;
       }
     }
 

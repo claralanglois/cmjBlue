@@ -314,12 +314,12 @@ header .nav-container .tags {
   }
 }
 header .nav-container .shuffle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background-color: #f8f7f7;
   cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }
 @media (max-width: 900px) {
   header .nav-container .shuffle {
@@ -330,9 +330,19 @@ header .nav-container .shuffle:after {
   content: "";
   border: 1px solid #4b6eeb;
   position: absolute;
-  left: 0;
-  width: 100%;
+  left: 110%;
+  width: 50%;
   z-index: -1;
+  top: 50%;
+}
+header .nav-container .shuffle:before {
+  content: "";
+  border: 1px solid #4b6eeb;
+  position: absolute;
+  left: -60%;
+  width: 50%;
+  z-index: -1;
+  top: 50%;
 }
 
 .titles {

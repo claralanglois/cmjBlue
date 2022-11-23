@@ -1,12 +1,12 @@
 {
   "dependencies": {
+    "dotenv": "^16.0.3",
     "gsap": "npm:@gsap/member@^3.11.3",
     "splitting": "^1.0.6"
   },
   "name": "website",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

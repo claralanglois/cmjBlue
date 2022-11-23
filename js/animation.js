@@ -42,10 +42,11 @@ gsap.registerPlugin(Flip);
 //     toggleActions: "restart pause reverse pause"
 // })
 
+
+
 document.querySelector(".shuffle").addEventListener("click", () => {
     flipState()
 });
-
 
 function switchItUp() {
     let images = gsap.utils.toArray(".img")

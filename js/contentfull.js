@@ -5,33 +5,32 @@
 // gsap.registerPlugin(ScrollTrigger)
 //
 
-const spaceId = "0mhqf7pgbfso"
+const sid = "0mhqf7pgbfso"
 const environmentId = "master"
-const accessToken = "w77z_ekcGz3LhjplKHNEz2qxTuRGXjtNzTo8MPlWEmU"
+const at = "w77z_ekcGz3LhjplKHNEz2qxTuRGXjtNzTo8MPlWEmU"
 
 var client = contentful.createClient({
-    space: `${spaceId}`,
-    accessToken: `${accessToken}`,
+    space: `${sid}`,
+    accessToken: `${at}`,
 });
 
-
+//get tag from menu title (illu,textile,deco)
 const page = sessionStorage.getItem('page');
-
 let tags = [page]
-console.log(tags)
-
-showLink(page)
 
 
-function showLink(selectedPage) {
+//add class to menu to show the selected 'page'
+function goToPage(selectedPage) {
     let pages = ['textile', 'decoration', 'illustration']
-    let selectItem = document.querySelector("#" + selectedPage)
+
+    let pageButton = document.querySelector("#" + selectedPage)
+
     let index = pages.indexOf(selectedPage);
     if (index !== -1) {
         pages.splice(index, 1);
     }
-    selectItem.classList.add("show")
 
+    pageButton.classList.add("show")
     pages.forEach(link => {
         document.querySelector("#" + link).classList.remove("show")
     });
@@ -39,23 +38,65 @@ function showLink(selectedPage) {
     sectionSelected.style.display = "none";
 }
 
-function changeTag(newTag) {
+function changePage(newTag) {
     tags = [newTag]
-    DisplaySelectedItem()
-    showLink(newTag)
+    goToPage(newTag)
+    // DisplaySelectedItem()
 }
 
 
-let tagList = []
-
 const toTitleCase = (phrase) => {
-    return phrase
-        .toLowerCase()
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join('');
+    const words = phrase.split(" ");
+    return words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('');
 };
+const toFormatString = (phrase) => {
+    return phrase.split(/(?=[A-Z])/).join(' ').toLowerCase()
+}
 
+const sectionGrid = document.querySelector(".masonry")
+const shuffleBtn = document.querySelector(".shuffle")
+const sectionNav = document.querySelector(".tags")
+
+
+let allArt = []
+
+function fetchArt() {
+    client.getEntries({order: 'sys.createdAt'})
+        .then((entries) => {
+            allArt = entries.items
+                .filter(entry => entry.fields.mainImage)
+                .map(function (entry) {
+                    let tagsArr = entry.metadata.tags
+                    let tags = []
+                    tagsArr.forEach((tag) => {
+                        tags.push(tag.sys.id)
+                    })
+                    return {
+                        imageURL: entry.fields.mainImage.fields.file.url,
+                        entryId: entry.sys.id,
+                        tags: tags
+                    }
+                })
+        }).then(() => filterArt())
+        .then(() => displayArt())
+        .then(() => displayTags())
+}
+
+let selectedArt = []
+
+function filterArt() {
+    allArt.forEach((entry) => {
+        for (let i = 0; i < tags.length; i++) {
+            if (entry.tags.includes(tags[i])) {
+                if (selectedArt.indexOf(entry) === -1) {
+                    selectedArt.push(entry)
+                }
+            }
+        }
+    })
+}
+
+let allTags = []
 
 function selectTag(tagToAdd) {
     let button = document.getElementById(`${tagToAdd}`)
@@ -66,116 +107,77 @@ function selectTag(tagToAdd) {
             if (tags[i] === formatedId) {
                 tags.splice(i, 1);
             }
-            button.classList.remove("active")
         }
+        button.classList.remove("active")
     } else {
         tags.push(formatedId);
-        button.classList.add("active")
     }
-    console.log(tags)
-    DisplaySelectedItem()
+    updateArt()
 }
 
-const sectionGrid = document.querySelector(".masonry")
-const shuffleBtn = document.querySelector(".shuffle")
-const sectionNav = document.querySelector(".tags")
-//tag menu
+let pagesTitle = ['textile', 'decoration', 'illustration']
 
-client.getEntries({order: 'sys.createdAt'})
-    .then(function (entries) {
-        entries.items.forEach(function (entry) {
-            var menu = entry.fields.tagTitle;
+function displayTags() {
+    selectedArt.forEach((entry) => {
+        entry.tags.forEach((tag) => {
+            if (allTags.indexOf(tag) === -1 && pagesTitle.indexOf(tag) === -1) {
+                allTags.push(tag)
+                let tagTitle = toFormatString(tag)
+                sectionNav.innerHTML = sectionNav.innerHTML + `<a id="${tag}" onclick="selectTag('${tag}')">${tagTitle}</a>`
+            }
+        })
+    })
+}
 
-            if (menu) {
-                tagList.push(menu)
-                sectionNav.innerHTML = sectionNav.innerHTML + `<a id="${menu}" class="poop" onclick="selectTag('${menu}')">${menu}</a>`
+
+function updateTags() {
+    allTags = []
+    console.log(tags)
+    sectionNav.innerHTML = '';
+    selectedArt.forEach((entry, index) => {
+        entry.tags.forEach((tag) => {
+            if (allTags.indexOf(tag) === -1 && pagesTitle.indexOf(tag) === -1) {
+                allTags.push(tag)
+                let tagTitle = toFormatString(tag)
+                sectionNav.innerHTML = sectionNav.innerHTML + `<a id="${tag}" onclick="selectTag('${tag}')">${tagTitle}</a>`
+            }
+            if (tags.includes(tag) && pagesTitle.indexOf(tag) === -1) {
+                let button = document.getElementById(`${tag}`)
+                button.classList.add("active")
             }
 
         })
-    });
+    })
+}
 
-function DisplaySelectedItem() {
+function displayArt() {
     sectionGrid.style.display = "flex";
     sectionNav.style.display = "flex";
     sectionGrid.innerHTML = "";
     shuffleBtn.style.display = "flex";
+    selectedArt.forEach((entry) => {
+        const sectionGrid = document.querySelector(".masonry")
+        sectionGrid.innerHTML = sectionGrid.innerHTML + `
+        <div class="mItem"><img class="img" onclick="itemClicked('${entry.entryId}')" src="${entry.imageURL}"></div>`
+    })
+    animateGrid()
+}
 
-
-    client.getEntries(
-        {
-            order: 'sys.createdAt',
-            'metadata.tags.sys.id[all]': tags.join()
+function updateArt() {
+    filterArt()
+    selectedArt.forEach((entry, index) => {
+        for (let i = 0; i < tags.length; i++) {
+            if (entry.tags.indexOf(tags[i]) === -1) {
+                delete selectedArt[index]
+            }
         }
-    )
-        .then(function (entries) {
-            entries.items.map(function (entry) {
-
-                const sectionGrid = document.querySelector(".masonry")
-
-                //load the images with the necessary informations to load the associated details in product page(id, url main image, url mockup)
-                var imageURL = 'https:' + entry.fields.mainImage.fields.file.url;
-                var entryId = entry.sys.id
-                sectionGrid.innerHTML = sectionGrid.innerHTML + `
-               <div class="mItem"><img class="img" onclick="itemClicked('${entryId}')" src="${imageURL}"></div>`
-            });
-            animateGrid()
-        })
+    })
+    displayArt()
+    updateTags()
 }
 
-//todo go through the list of images and remove the one that dont match the tag
-// function tagChanged() {
-//     client.getEntries(
-//         {
-//             order: 'sys.createdAt',
-//             'metadata.tags.sys.id[all]': tags.join()
-//         }
-//     )
-//         .then(function (entries) {
-//             entries.items.map(function (entry) {
-//
-//                 const sectionGrid = document.querySelector(".masonry")
-//
-//                 //load the images with the necessary informations to load the associated details in product page(id, url main image, url mockup)
-//                 var imageURL = 'https:' + entry.fields.mainImage.fields.file.url;
-//                 var entryId = entry.sys.id
-//                 sectionGrid.innerHTML = sectionGrid.innerHTML + `
-//                <div class="mItem"><img class="img" onclick="itemClicked('${entryId}')" src="${imageURL}"></div>`
-//             });
-//
-//         })
-// }
 
-
-function animateGrid() {
-    gsap.defaults({ease: "power4"});
-    gsap.set(".mItem", {y: 50, x: 50});
-
-    ScrollTrigger.batch(".mItem", {
-        interval: 0.1,
-        batchMax: 3,
-        onEnter: batch => gsap.to(batch, {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            stagger: {each: 0.10, grid: [1, 3]},
-            overwrite: true
-        }),
-        onLeave: batch => gsap.set(batch, {opacity: 0, x: -100, y: -50, overwrite: true}),
-        onEnterBack: batch => gsap.to(batch, {opacity: 1, x: 0, y: 0, stagger: 0.10, overwrite: true}),
-        onLeaveBack: batch => gsap.set(batch, {opacity: 0, x: 50, y: 50, overwrite: true})
-    });
-
-}
-
-ScrollTrigger.addEventListener("refreshInit", () => {
-        gsap.set(".mItem", {y: 0, x: 0})
-    }
-);
-
-
-DisplaySelectedItem()
-
-
+//illustration clicked, get illu info display mockup
 function itemClicked(id) {
     sectionGrid.style.display = "none";
     shuffleBtn.style.display = "none";
@@ -186,8 +188,8 @@ function itemClicked(id) {
     const sectionSelected = document.querySelector(".selected")
     sectionSelected.style.display = "flex";
 
-    sectionMock.innerHTML = '    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>\n' +
-        '            <a class="next" onclick="plusSlides(1)">&#10095;</a>';
+    sectionMock.innerHTML = '<a class="prev" onclick="plusSlides(-1)">&#10094;</a>\n' +
+        '<a class="next" onclick="plusSlides(1)">&#10095;</a>';
     sectionMain.innerHTML = '';
     sectionDetails.innerHTML = '';
 
@@ -207,8 +209,7 @@ function itemClicked(id) {
                 .then(function (asset) {
                         i += 1;
                         let mockupURL = 'https:' + asset.fields.file.url
-                        sectionMock.innerHTML = sectionMock.innerHTML + ` <img class="mockup" src="${mockupURL}">
-                `
+                        sectionMock.innerHTML = sectionMock.innerHTML + ` <img class="mockup" src="${mockupURL}">`
                     }
                 ))
 
@@ -246,7 +247,6 @@ function checkListingsState(id) {
                     if (data.results[0].state === "active") {
                         let link = data.results[0].url;
                         let button = '<a href="' + link + '" target="_blank">shop!</a>'
-                        console.log(button)
                         $(".shop-btn").html(button)
                     }
                 }
@@ -256,4 +256,36 @@ function checkListingsState(id) {
 
 }
 
-//
+
+function animateGrid() {
+    gsap.defaults({ease: "power4"});
+    gsap.set(".mItem", {y: 50, x: 50, opacity: 1});
+
+    ScrollTrigger.batch(".mItem", {
+        interval: 0.1,
+        batchMax: 3,
+        onEnter: batch => gsap.to(batch, {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            stagger: {each: 0.05, grid: [1, 3]},
+            overwrite: true
+        }),
+        onLeave: batch => gsap.set(batch, {opacity: 0, x: -100, y: -50, overwrite: true}),
+        onEnterBack: batch => gsap.to(batch, {opacity: 1, x: 0, y: 0, stagger: 0.10, overwrite: true}),
+        onLeaveBack: batch => gsap.set(batch, {opacity: 0, x: 50, y: 50, overwrite: true})
+    });
+
+}
+
+ScrollTrigger.addEventListener("refreshInit", () => {
+        gsap.set(".mItem", {y: -50, x: -50, opacity: 0})
+    }
+);
+
+function main() {
+    goToPage(page)
+    fetchArt()
+}
+
+main()
