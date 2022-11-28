@@ -185,10 +185,11 @@ header .nav-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: -10;
 }
 @media (min-width: 900px) {
   header .nav-container {
-    height: 70vh;
+    height: 60vh;
     align-items: center;
     width: 40vw;
   }
@@ -836,7 +837,6 @@ header .nav-container .shuffle:before {
 @media (min-width: 1500px) {
   .work .selected .mock {
     width: 55vw;
-    height: 70vh;
   }
 }
 .work .selected .mock .prev, .work .selected .mock .next {
@@ -906,7 +906,7 @@ header .nav-container .shuffle:before {
 }
 .work .selected .container .shop-btn {
   border-radius: 20px;
-  padding: 5px;
+  padding: 5px 10px;
   border: 2px solid #4b6eeb;
   display: inline-flex;
 }

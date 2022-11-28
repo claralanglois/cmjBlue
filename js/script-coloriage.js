@@ -4,7 +4,7 @@
   let mainHolder, colorHolder;
   let svgObject, svgOutline, svgColor;
   const fillSpeed = 0.3;
-  let chosenColor = '#4B6EEB'
+  let chosenColor = '#4436d4'
 
   $('.palette').each(function(){
     $(this).on("click", function(){

@@ -68,6 +68,10 @@ function showSlides(n) {
 //     $(".masonry").append(a);
 // }
 
+$("body").on("contextmenu",function(e){
+    return false;
+});
+
 function setPage(newTag) {
     sessionStorage.setItem("page", newTag);
 }

@@ -22,7 +22,7 @@ let tags = [page]
 //add class to menu to show the selected 'page'
 function goToPage(selectedPage) {
     let pages = ['textile', 'decoration', 'illustration']
-
+    console.log(selectedPage)
     let pageButton = document.querySelector("#" + selectedPage)
 
     let index = pages.indexOf(selectedPage);
@@ -41,7 +41,7 @@ function goToPage(selectedPage) {
 function changePage(newTag) {
     tags = [newTag]
     goToPage(newTag)
-    // DisplaySelectedItem()
+    updateArt()
 }
 
 
@@ -79,6 +79,7 @@ function fetchArt() {
                 })
         }).then(() => filterArt())
         .then(() => displayArt())
+        .then(() => animateGrid())
         .then(() => displayTags())
 }
 
@@ -160,7 +161,7 @@ function displayArt() {
         sectionGrid.innerHTML = sectionGrid.innerHTML + `
         <div class="mItem"><img class="img" onclick="itemClicked('${entry.entryId}')" src="${entry.imageURL}"></div>`
     })
-    animateGrid()
+
 }
 
 function updateArt() {
@@ -173,6 +174,7 @@ function updateArt() {
         }
     })
     displayArt()
+    animateGrid()
     updateTags()
 }
 
@@ -246,8 +248,8 @@ function checkListingsState(id) {
 
                     if (data.results[0].state === "active") {
                         let link = data.results[0].url;
-                        let button = '<a href="' + link + '" target="_blank">shop!</a>'
-                        $(".shop-btn").html(button)
+                        let button = '<div class="shop-btn"><a href="' + link + '" target="_blank">Order on etsy</a></div>'
+                        $(".btn-container").html(button)
                     }
                 }
             }
@@ -284,8 +286,8 @@ ScrollTrigger.addEventListener("refreshInit", () => {
 );
 
 function main() {
-    goToPage(page)
     fetchArt()
+   changePage(page)
 }
 
 main()

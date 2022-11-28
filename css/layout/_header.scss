@@ -20,9 +20,9 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
+    z-index: -10;
     @include for-size(tablet-landscape-up) {
-      height: 70vh;
+      height: 60vh;
       align-items: center;
       width: 40vw;
     }
